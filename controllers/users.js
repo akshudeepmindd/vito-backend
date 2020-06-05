@@ -1,5 +1,5 @@
 const User = require('../db/models/userSchema');
-const userValidator = require('../validators/uservalidator');
+const userValidator = require('../validators/userValidator');
 const jwtHelper = require('../helpers/jwt');
 const responseHelper = require('../helpers/response');
 const Token = require('../db/models/tokenSchema')

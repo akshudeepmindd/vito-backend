@@ -23,6 +23,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.use ('/api/user', Routes.UserRoute);
+app.use ('/api/package', Routes.PackageRoute);
 
 app
   .listen (port, function () {
