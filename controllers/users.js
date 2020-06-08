@@ -10,8 +10,10 @@ const SendMail = require('../helpers/nodemailer')
 
 const register = async (req, res, next) =>{
     try{
-        const userForm = await userValidator.register.validateAsync(req.body);
-        const { firstName, lastName, userName, email } = userForm;
+		
+		const userForm = await userValidator.register.validateAsync(req.body);
+		console.log(userForm, "userForm")
+		const { firstName, lastName, userName, email } = userForm;
         const user = await User.findOne({ email });
         if(user){
             throw Error('Email is not unique');
@@ -36,9 +38,22 @@ const register = async (req, res, next) =>{
 
 const emailVerifid = async (req, res, next) => {
 	try{
-		const findToken = await Token.findOne({ token: req.body.token })
+		// console.log(req.body, "reqForvarification")
+		// const verificationForm = userValidator.emailVerification.validateAsync(req.body.token)
+		const verificationForm = req.body
+		const { token } = verificationForm
+		console.log(verificationForm, "verificationForm")
+		const findToken = await Token.findOne({ token })
 		if(!findToken){
 			throw Error('token not found.');
+		}
+
+		const isTokenverified = await User.findOne({
+				_id:findToken.userId
+		})
+
+		if(isTokenverified.isVerified){
+			throw Error('Email is already verified.');
 		}
 
 		const userToken = await User.updateOne(
@@ -49,14 +64,18 @@ const emailVerifid = async (req, res, next) => {
 				$set: {isVerified: true}
 			}
 			)
+		
+		const nullToken = await Token.remove({_id: findToken._id})
 		if(!userToken){
 			throw Error('user not found.');
 		}
-		responseHelper.success(res, `Your email is verified`, 200)
+
+		
+		responseHelper.success(res, `Your email is verified.`, 200)
 		// const tokenVerified = await Token.updateOne({token:token},{
 		// 	$set: {token: null}
 		// })
-	}catch(erroe){
+	}catch(error){
 		next(error)
 	}
 }

@@ -12,7 +12,7 @@ const createPackage = async(req, res, next) => {
         }
         const newPackages = await new Package({packageForm}).save()
         // await newPackage.save()
-        responseHelper.success(res, newPackages, 200)
+        responseHelper.data(res, newPackages, 200)
     }catch(error){
         next(error)
     }
@@ -28,7 +28,7 @@ const editPackage = async(req, res, next) => {
             { _id: packageId },
             {$set:packageForm}
             )
-        responseHelper.success(res, response, 200)
+        responseHelper.data(res, response, 200)
     }catch(error){
         next(error)
     }
@@ -40,7 +40,7 @@ const getPackage = async(req, res, next) => {
         const response = await Package.findOne(
             { _id: packageId }
             )
-        responseHelper.success(res, response, 200)
+        responseHelper.data(res, response, 200)
     }catch(error){
         next(error)
     }
@@ -49,7 +49,7 @@ const getPackage = async(req, res, next) => {
 const getAllPackage = async(req, res, next) => {
     try{
         const response = await Package.find()
-        responseHelper.success(res, response, 200)
+        responseHelper.data(res, response, 200)
     }catch(error){
         next(error)
     }
@@ -61,7 +61,7 @@ const removePackage = async(req, res, next) => {
         const response = await Package.deleteOne(
             { _id: packageId }
         )
-        responseHelper.success(res, response, 200)
+        responseHelper.success(res, "Plane remove succfully.", 200)
     }catch(error){
         next(error)
     }

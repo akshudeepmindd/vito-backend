@@ -11,7 +11,8 @@ const register = Joi.object().keys({
 	userName: Joi.string()
 		.required(),
     firstName: Joi.string(),
-    lastName:Joi.string(),
+	lastName:Joi.string(),
+	role: Joi.string().allow()
 });
 
 const login = Joi.object().keys({
@@ -24,7 +25,12 @@ const login = Joi.object().keys({
 		.max(10)
 });
 
+const emailVerification = Joi.object().keys({
+	token: Joi.object().required()
+})
+
 module.exports = {
 	register,
-	login
+	login,
+	emailVerification
 };

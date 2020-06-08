@@ -1,0 +1,68 @@
+paths:
+  /api/package:
+    post:
+      tags:
+        - Package
+      summary: Adds a new Package
+      parameters:
+        - in: formData
+          name: packageName
+          type: string
+          required: true
+        - in: formData
+          name: cost
+          type: string
+          required: true
+      responses:
+        200:
+          description: An object with Package
+    get:
+      tags:
+        - Package
+      summary: Get Package
+      responses:
+        200:
+          description: All Package list
+  /api/package/{packageId}:
+    get:
+      tags:
+        - Package
+      summary: Get Package
+      parameters:
+        - in: path
+          name: packageId
+          type: string
+          required: true
+      responses:
+        200:
+          description: An boject of Package
+    put:
+      tags:
+        - Package
+      summary: Get Package
+      parameters:
+        - in: path
+          name: packageId
+          type: string
+          required: true
+        - in: formData
+          name: packageName
+          type: string
+        - in: formData
+          name: cost
+          type: string
+      responses:
+        200:
+          description: Update oboject of Package
+    delete:
+      tags:
+        - Package
+      summary: Get Package
+      parameters:
+        - in: path
+          name: packageId
+          type: string
+          required: true
+      responses:
+        200:
+          description: Remove Package.

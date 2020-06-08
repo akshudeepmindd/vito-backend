@@ -2,14 +2,15 @@ const Payment = require('../db/models/paymentSchema')
 const responseHelper = require('../helpers/response');
 const paymentValidator = require('../validators/paymentvalidator')
 
-const payment = async(req, res, next) =>{
+const userPayment = async(req, res, next) =>{
     try{
-        const { userId, transactionId, packageId } = req.body
+        const paymentForm = await paymentValidator.payment(req.body)
+        const { packageId, transactionId } = paymentForm
         const { id } = req.user;
+        paymentForm.userId = id;
+
         const newPayment = await new Payment({
-            userId,
-            transactionId,
-            packageId
+            paymentForm
         })
 
         // const payments = await Payment.findOne({packageName})
@@ -18,8 +19,12 @@ const payment = async(req, res, next) =>{
         // }
 
         const newPayments = await newPayment.save()
-        responseHelper.success(res, newPayments, 200)
+        responseHelper.success(res, "Payment Successfull.", 200)
     }catch(error){
         next(error)
     }
+}
+
+module.exports = {
+    userPayment
 }

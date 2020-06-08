@@ -2,12 +2,13 @@
 const {Router} = require ('express');
 const packageController = require ('../controllers/package');
 const router =  Router ();
+const middlewares = require('../middlewares/userAuth');
 
-router.post ('/', packageController.createPackage);
-router.get ('/', packageController.getAllPackage);
-router.get('/:packageId', packageController.getPackage);
-router.put('/:packageId', packageController.editPackage)
-router.delete('/:packageId', packageController.removePackage)
+router.post ('/', middlewares.authCheck,packageController.createPackage);
+router.get ('/', middlewares.authCheck, packageController.getAllPackage);
+router.get('/:packageId', middlewares.authCheck, packageController.getPackage);
+router.put('/:packageId', middlewares.authCheck, packageController.editPackage)
+router.delete('/:packageId', middlewares.authCheck, packageController.removePackage)
 
 
 module.exports = router;

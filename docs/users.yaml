@@ -1,0 +1,61 @@
+paths:
+  /api/user/register:
+    post:
+      tags:
+        - User
+      summary: creates a new user
+      parameters:
+        - in: formData
+          name: email
+          type: string
+          required: true
+        - in: formData
+          name: password
+          type: string
+          required: true
+        - in: formData
+          name: userName
+          type: string
+        - in: formData
+          name: firstName
+          type: string
+        - in: formData
+          name: lastName
+          type: string
+        - in: formData
+          name: role
+          type: string
+          enum: ['student', 'teacher', 'admin']
+      responses:
+        200:
+          description: An object with new user message
+  /api/user/verified:
+    post:
+      tags:
+        - User
+      summary: verify user
+      parameters:
+        - in: formData
+          name: token
+          type: string
+          required: true
+      responses:
+        200:
+          description: An Object with user token
+  /api/user/login:
+    post:
+      tags:
+        - User
+      summary: Authenticates a user
+      parameters:
+        - in: formData
+          name: email
+          type: string
+          required: true
+        - in: formData
+          name: password
+          type: string
+          required: true
+      responses:
+        200:
+          description: An Object with user token
