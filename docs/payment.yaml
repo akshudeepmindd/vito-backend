@@ -1,0 +1,18 @@
+paths:
+  /api/payments/payment:
+    post:
+      tags:
+        - Payments
+      summary: Make payments
+      parameters:
+        - in: formData
+          name: transactionId
+          type: string
+          required: true
+        - in: formData
+          name: packageId
+          type: string
+          required: true
+      responses:
+        200:
+          description: Payment successfull.

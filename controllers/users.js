@@ -16,7 +16,7 @@ const register = async (req, res, next) =>{
 		const { firstName, lastName, userName, email } = userForm;
         const user = await User.findOne({ email });
         if(user){
-            throw Error('Email is not unique');
+            throw Error('Email is not unique.');
         }
 		const users = await new User(userForm).save();
 		const verifiedToken = new Token({ userId: users._id, token: crypto.randomBytes(16).toString('hex') });
@@ -43,7 +43,7 @@ const emailVerifid = async (req, res, next) => {
 		const verificationForm = req.body
 		const { token } = verificationForm
 		console.log(verificationForm, "verificationForm")
-		const findToken = await Token.findOne({ token })
+		const findToken = await (await Token.findOne({ token }))
 		if(!findToken){
 			throw Error('token not found.');
 		}
@@ -70,11 +70,7 @@ const emailVerifid = async (req, res, next) => {
 			throw Error('user not found.');
 		}
 
-		
 		responseHelper.success(res, `Your email is verified.`, 200)
-		// const tokenVerified = await Token.updateOne({token:token},{
-		// 	$set: {token: null}
-		// })
 	}catch(error){
 		next(error)
 	}

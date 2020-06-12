@@ -4,6 +4,8 @@ paths:
       tags:
         - Package
       summary: Adds a new Package
+      security:
+        - Bearer: []
       parameters:
         - in: formData
           name: packageName
@@ -20,6 +22,8 @@ paths:
       tags:
         - Package
       summary: Get Package
+      security:
+        - Bearer: []
       responses:
         200:
           description: All Package list
@@ -28,6 +32,8 @@ paths:
       tags:
         - Package
       summary: Get Package
+      security:
+        - Bearer: []
       parameters:
         - in: path
           name: packageId
@@ -40,6 +46,8 @@ paths:
       tags:
         - Package
       summary: Get Package
+      security:
+        - Bearer: []
       parameters:
         - in: path
           name: packageId
@@ -58,6 +66,8 @@ paths:
       tags:
         - Package
       summary: Get Package
+      security:
+        - Bearer: []
       parameters:
         - in: path
           name: packageId

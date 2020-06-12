@@ -6,7 +6,7 @@ const swaggerDefinition = {
 	},
 	host: `localhost:${process.env.PORT}`,
 	securityDefinitions: {
-		auth: {
+		Bearer: {
 			type: 'apiKey',
 			name: 'Authorization',
 			scheme: 'bearer',
