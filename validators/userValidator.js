@@ -29,8 +29,14 @@ const emailVerification = Joi.object().keys({
 	token: Joi.object().required()
 })
 
+
+const resendVerificationToken = Joi.object().keys({
+	email: Joi.string().email().required(),
+})
+
 module.exports = {
 	register,
 	login,
-	emailVerification
+	emailVerification,
+	resendVerificationToken
 };

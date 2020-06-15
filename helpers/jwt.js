@@ -21,10 +21,7 @@ const createNewToken = user => {
 
 const decryptToken = async token => {
 	try {
-		debugger
 		const decodedToken = await JWT.verify(token, JWT_SECRET);
-		console.log(decodedToken, "decodeToken")
-		debugger
 		return decodedToken;
 	} catch (err) {
 		return err;

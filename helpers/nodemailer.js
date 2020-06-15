@@ -20,9 +20,7 @@ const sendmail = async (req, res, userMail, subject, text) =>{
             }
         });
         const mail = await transporter.sendMail(mailOptions)
-        // if(!mail){
-        //     throw Error('Email is not present');
-        // }
+
         return mail
 
     }catch(error){

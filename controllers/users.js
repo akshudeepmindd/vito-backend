@@ -19,10 +19,10 @@ const register = async (req, res, next) =>{
             throw Error('Email is not unique.');
         }
 		const users = await new User(userForm).save();
+
+		// new Token()
 		const verifiedToken = new Token({ userId: users._id, token: crypto.randomBytes(16).toString('hex') });
-		console.log(verifiedToken, "verifiedToken")
-		// await new Token()
-		await verifiedToken.save(verifiedToken.token)
+		await verifiedToken.save(verifiedToken)
 
 		// await ()
 		let subject = 'Account Verification Token'
@@ -38,8 +38,6 @@ const register = async (req, res, next) =>{
 
 const emailVerifid = async (req, res, next) => {
 	try{
-		// console.log(req.body, "reqForvarification")
-		// const verificationForm = userValidator.emailVerification.validateAsync(req.body.token)
 		const verificationForm = req.body
 		const { token } = verificationForm
 		console.log(verificationForm, "verificationForm")
@@ -100,8 +98,36 @@ const authenticate = async (req, res, next) => {
 	}
 };
 
+const resendToken = async (req, res, next) => {
+	try{
+		 const userToken = await userValidator.resendVerificationToken.validateAsync(req.body);
+		 const { email } = userToken
+		 const user = await User.findOne({ email });
+		 if(!user){
+			 throw Error("User is not register with us.")
+		 }else if(user.isVerified){
+			throw Error("User is already verify.")
+		 }else{
+			const resendToken = new Token({ userId: user._id, token: crypto.randomBytes(16).toString('hex') })
+			await verifiedToken.save(resendToken)
+
+		// await ()
+		let subject = 'Account Verification Token'
+		let userMail = user.email
+		let text = 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + verifiedToken.token + '.\n'
+		console.log(userMail)
+		await SendMail.sendmail(req, res, userMail, subject, text)
+        responseHelper.success(res, `user created successfully a verification link send to ${userMail}`, 200)
+		 }
+
+	}catch(error){
+		next(error)
+	}
+}
+
 module.exports = {
 	register,
 	authenticate,
-	emailVerifid
+	emailVerifid,
+	resendToken
 };

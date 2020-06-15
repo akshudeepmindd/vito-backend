@@ -9,6 +9,7 @@ const createPackage = async(req, res, next) => {
         const { packageName, cost } = packageForm
 
         const packages = await Package.findOne({packageName})
+
         if(packages){
             throw Error('Package already exist.')
         }
@@ -16,6 +17,7 @@ const createPackage = async(req, res, next) => {
         const newPackages = await new Package(packageForm).save()
         
         responseHelper.data(res, newPackages, 200)
+
     }catch(error){
         next(error)
     }
@@ -31,6 +33,7 @@ const editPackage = async(req, res, next) => {
             { _id: packageId },
             {$set:packageForm}
             )
+
         responseHelper.data(res, response, 200)
     }catch(error){
         next(error)
@@ -39,9 +42,11 @@ const editPackage = async(req, res, next) => {
 
 const getPackage = async(req, res, next) => {
     try{
+
         const{ packageId } = req.params
         const response = await Package.findOne({ _id: packageId })
         responseHelper.data(res, response, 200)
+
     }catch(error){
         next(error)
     }
@@ -59,7 +64,7 @@ const getAllPackage = async(req, res, next) => {
 const removePackage = async(req, res, next) => {
     try{
         const{ packageId } = req.params
-        const response = await Package.deleteOne({ _id: packageId })
+        await Package.deleteOne({ _id: packageId })
         responseHelper.success(res, "Plane remove succfully.", 200)
     }catch(error){
         next(error)
