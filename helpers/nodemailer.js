@@ -3,7 +3,6 @@ const nodemailer = require('nodemailer')
 
 const sendmail = async (req, res, userMail, subject, text) =>{
     try{
-        console.log(userMail, "userMail")
         const mailOptions = {
             from: 'mastrotesting4395@gmail.com',
             to: userMail, 

@@ -20,7 +20,7 @@ const register = async (req, res, next) =>{
         }
 		const users = await new User(userForm).save();
 
-		// new Token()
+		// // new Token()
 		const verifiedToken = new Token({ userId: users._id, token: crypto.randomBytes(16).toString('hex') });
 		await verifiedToken.save(verifiedToken)
 
@@ -86,10 +86,10 @@ const authenticate = async (req, res, next) => {
 		if (!passwordMatch) {
 			throw Error('Password is inncorrect.');
 		}
-		if(!user.isVerified){
-			throw Error('email is not verified.');
-		}
-		console.log(user)
+		// if(!user.isVerified){
+		// 	throw Error('email is not verified.');
+		// }
+		// console.log(user)
 		const userToken = jwtHelper.createNewToken(user);
 		console.log(userToken,"resss")
 		responseHelper.token(res, userToken, 200);
