@@ -4,7 +4,7 @@ const swaggerDefinition = {
 		version: '1.0.0',
 		description: 'Project for Vito pages'
 	},
-	host: `localhost:${process.env.PORT}`,
+	host: `https://vito-backend-nodejs.herokuapp.com:${process.env.PORT}`,
 	securityDefinitions: {
 		Bearer: {
 			type: 'apiKey',
